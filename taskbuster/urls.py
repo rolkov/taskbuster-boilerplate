@@ -15,13 +15,17 @@ Including another URLconf
 """
 from .views import home
 from .views import home_files
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.urls import path
 from django.urls import re_path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', home, name='home'),
     re_path(r'^(?P<filename>(robots.txt)|(humans.txt))$',
             home_files, name='home-files'),
 ]
+
+urlpatterns += i18n_patterns(
+    path('', home, name='home'),
+    path('admin/', admin.site.urls),
+)
